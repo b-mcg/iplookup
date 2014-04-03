@@ -37,12 +37,12 @@ def main():
     main()
 
     """
-    usage       =       '\nUsage: ip_lookup.py [IP_Address] [--help]\nip_lookup.py: Error: too few arguments\n'
+    usage       =       '\nUsage: iplookup [IP_Address] [--help]\niplookup: Error: too few arguments\n'
 
     try:
 
         if sys.argv[1] == '--help':
-            print usage[:43]
+            print usage[:39]
 
         else:
             IP_Lookup(sys.argv[1]).display_info()
