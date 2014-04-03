@@ -5,6 +5,9 @@ iplookup
 
 IP address information lookup utility written in Python.
 
+Requirements:
+
+bs4(BeautifulSoup), requests
 
 Installation:
 
