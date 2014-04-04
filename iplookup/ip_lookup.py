@@ -67,8 +67,20 @@ class IP_Lookup(object):
         """
         print '\n\niplookup {0} by: {1} running...\n\n'.format(VERSION, __Author__)
 
+        # Create header dictionary to make the request look like it's from a web browser just incase there's query limiting
+        headers     =       {
+                            'Host' : 'db-ip.com',
+                            'User-Agent' : 'Mozilla/5.0 (X11; Linux x86_64; rv:28.0) Gecko/20100101 Firefox/28.0',
+                            'Accept' : 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+                            'Accept-Language' : 'en-US,en;q=0.5',
+                            'Accept-Encoding' : 'gzip, deflate',
+                            'DNT' : 1,
+                            'Connection' : 'keep-alive',
+                            'Cache-Control' : 'max-age=0'
+                            }
+
         # Check for possible errors and parse html returned from get request if no errors are found
-        with closing(requests.get(self.url)) as res:
+        with closing(requests.get(self.url, headers=headers)) as res:
 
             if res.status_code == 404:
                 print 'Error: 404 returned: Check IP address given\n\n'
@@ -83,20 +95,9 @@ class IP_Lookup(object):
                 print 'Error: Nothing returned from get request: Check IP address given\n\n'
                 sys.exit(2)
                 
-
-        # Create a temporary placeholder for conversion of ip info list into a dictionary
-            placeholder     =       []
-
-            for i in self.ip_info:
-                temp        =       i.split('\n')
-
-                try:
-                    placeholder.append((temp[0], temp[1]))
-
-                except IndexError:
-                    placeholder.append((temp[0], None))
-
-            self.ip_info    =       dict(placeholder)
+        # Reiterate through list of html data, creating new list of key/value tuple pairs and convert to dictionary
+            self.ip_info    =       dict([(temp.split('\n')[0], temp.split('\n')[1]) if len(temp.split('\n')) > 1 \
+                                            else (temp.split('\n')[0], None) for temp in self.ip_info])
 
     def display_info(self):
         """
