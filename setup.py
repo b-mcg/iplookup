@@ -21,7 +21,7 @@ setup(  name            =       'iplookup',
         packages        =       packages,
         package_dir     =       {'iplookup' : os.path.abspath(os.path.join(pathname, 'iplookup/'))},
         scripts         =       ['iplookup/iplookup'], 
-        data_files      =       [('share/iplookup', ['README.md'])] 
+        data_files      =       [('share/iplookup', ['README.md', 'LICENSE'])] 
     )
 
 
